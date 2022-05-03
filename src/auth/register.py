@@ -1,4 +1,4 @@
-import logging
+from src.utils.logger import logger
 import secrets
 from getpass import getpass
 from hashlib import pbkdf2_hmac
@@ -66,5 +66,4 @@ def register() -> int or dict:
     return data
 
 if __name__ == "__main__":
-    logger = logging.getLogger(__name__)
     register()
