@@ -25,7 +25,8 @@ def push_to_db(data: dict) -> int:
     db = client.credit_db
     users = db.users
     users.insert_one(data)
-    logger.info(f"New uesr {data['username']} created.")
+    logger.info(f"New user \"{data['username']}\" created.")
+    print("Account successfully registered!")
     return 0
 
 def register() -> int or dict:
