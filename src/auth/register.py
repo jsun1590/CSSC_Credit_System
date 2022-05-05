@@ -40,7 +40,7 @@ def register() -> int or dict:
                            lambda x: x,
                            "Your username is empty, please try again.")
 
-    if find_user(student_id, username) is not None:
+    if find_user(username, student_id) is not None:
         print("Username or student ID is already registered."
               + f" Please contact {config.CONTACT_NAME} to reset your password if you have forgotten it.")
         return 1
@@ -55,7 +55,7 @@ def register() -> int or dict:
             salt, password_hash = salt_and_hash(password)
 
 
-    data = {
+    user_doc = {
         "student_id": student_id,
         "username": username,
         "salt": salt,
@@ -63,8 +63,8 @@ def register() -> int or dict:
     }
 
 
-    push_to_db(data)
-    return data
+    push_to_db(user_doc)
+    return user_doc
 
 if __name__ == "__main__":
     register()

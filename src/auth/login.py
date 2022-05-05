@@ -1,7 +1,6 @@
-import logging
 from getpass import getpass
 from hashlib import pbkdf2_hmac
-
+from src.utils.logger import logger
 import colorama
 import pymongo
 from src.utils.functions import find_user, valid_input
@@ -22,10 +21,10 @@ def login():
     '''
     Main entry point function for the login module.
     '''
-    user = input("Please enter your username or student id:\n> ")
+    username = input("Please enter your username:\n> ")
     
     # Try to get the user from the collection
-    user_doc = find_user(user, user)
+    user_doc = find_user(username)
     
     # Return 1 if the user doesn't exist
     if user_doc is None:
@@ -33,21 +32,25 @@ def login():
                 + " Please register an account to continue.")
         return 1
     
-    password = valid_input("Please enter your password:\n> ", 
+    for trial in range(3):
+        password = valid_input("Please enter your password:\n> ",
                                lambda x: x,
                                "Your password is empty, please try again.",
                                True)
-
-    
-    if compare_hash(user_doc["salt"],
+            
+        if compare_hash(user_doc["salt"],
                         user_doc["password_hash"],
                         password):
-        print("Password incorrect, please try again.")
-        return 1
+            if trial == 2:
+                logger.warning(f"User {username} has exceeded maximum login attempts.")
+                print(f"Password incorrect, exiting... (try {trial + 1}/3)")
+                return 1
+            print(f"Password incorrect, please try again. (try {trial + 1}/3)")
 
-    return user_doc
+        else:
+            logger.info(f"User {username} has logged in.")
+            print(f"Login success! Welcome {username}.")
+            return user_doc
 
 if __name__ == "__main__":
-    logger = logging.getLogger(__name__)
-    logger.config.fileConfig("../configs/logging.conf")
     login()

@@ -1,5 +1,4 @@
 from getpass import getpass
-from unittest.mock import NonCallableMagicMock
 
 from pymongo import MongoClient
 from src.configs import config
@@ -18,7 +17,7 @@ def valid_input(
         print(error)
     return value
 
-def find_user(student_id: str, username: str) -> dict or None:
+def find_user(username: str, student_id: str = "") -> dict or None:
     client = MongoClient(config.DB_IP, config.DB_PORT)
     db = client.credit_db
     users = db.users
