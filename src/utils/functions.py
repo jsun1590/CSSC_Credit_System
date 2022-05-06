@@ -19,7 +19,7 @@ def valid_input(
 
 def find_user(username: str, student_id: str = "") -> dict or None:
     client = MongoClient(config.DB_IP, config.DB_PORT)
-    db = client.credit_db
+    db = client.cssc_db
     users = db.users
     query = users.find_one({"$or":
         [{"student_id": student_id},

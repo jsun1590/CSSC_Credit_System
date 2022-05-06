@@ -1,12 +1,12 @@
-from src.utils.logger import logger
 import secrets
 from getpass import getpass
 from hashlib import pbkdf2_hmac
 
 import colorama
-from pymongo import MongoClient
 import src.configs.config as config
+from pymongo import MongoClient
 from src.utils.functions import find_user, valid_input
+from src.utils.logger import logger
 
 
 def salt_and_hash(raw_password: str) -> tuple[str, str]:
@@ -22,7 +22,7 @@ def push_to_db(data: dict) -> int:
     Push a new user to the users collection
     '''
     client = MongoClient(config.DB_IP, config.DB_PORT)
-    db = client.credit_db
+    db = client.cssc_db
     users = db.users
     users.insert_one(data)
     logger.info(f"New user \"{data['username']}\" created.")

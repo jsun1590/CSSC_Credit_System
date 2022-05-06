@@ -32,7 +32,7 @@ def login():
                 + " Please register an account to continue.")
         return 1
     
-    for trial in range(3):
+    for trial in range(1, 4):
         password = valid_input("Please enter your password:\n> ",
                                lambda x: x,
                                "Your password is empty, please try again.",
@@ -41,11 +41,11 @@ def login():
         if compare_hash(user_doc["salt"],
                         user_doc["password_hash"],
                         password):
-            if trial == 2:
+            if trial == 3:
                 logger.warning(f"User {username} has exceeded maximum login attempts.")
-                print(f"Password incorrect, exiting... (try {trial + 1}/3)")
+                print(f"Password incorrect, exiting... (try {trial}/3)")
                 return 1
-            print(f"Password incorrect, please try again. (try {trial + 1}/3)")
+            print(f"Password incorrect, please try again. (try {trial}/3)")
 
         else:
             logger.info(f"User {username} has logged in.")
