@@ -1,6 +1,6 @@
 from getpass import getpass
 from hashlib import pbkdf2_hmac
-from src.utils.logger import logger
+import src.utils.logger as logger
 import colorama
 import pymongo
 from src.utils.functions import find_user, valid_input
@@ -17,7 +17,7 @@ def compare_hash(salt: str,
     return 1
     
 
-def login():
+def login() -> dict or None:
     '''
     Main entry point function for the login module.
     '''
@@ -30,7 +30,7 @@ def login():
     if user_doc is None:
         print(f"Username or student ID is not registered."
                 + " Please register an account to continue.")
-        return 1
+        return None
     
     for trial in range(1, 4):
         password = valid_input("Please enter your password:\n> ",
@@ -44,11 +44,11 @@ def login():
             if trial == 3:
                 logger.warning(f"User {username} has exceeded maximum login attempts.")
                 print(f"Password incorrect, exiting... (try {trial}/3)")
-                return 1
+                return None
             print(f"Password incorrect, please try again. (try {trial}/3)")
 
         else:
-            logger.info(f"User {username} has logged in.")
+            logger.logger().info(f"User {username} has logged in.")
             print(f"Login success! Welcome {username}.")
             return user_doc
 

@@ -6,7 +6,7 @@ import colorama
 import src.configs.config as config
 from pymongo import MongoClient
 from src.utils.functions import find_user, valid_input
-from src.utils.logger import logger
+import src.utils.logger as logger
 
 
 def salt_and_hash(raw_password: str) -> tuple[str, str]:
@@ -25,11 +25,11 @@ def push_to_db(data: dict) -> int:
     db = client.cssc_db
     users = db.users
     users.insert_one(data)
-    logger.info(f"New user \"{data['username']}\" created.")
+    logger.logger().info(f"New user \"{data['username']}\" created.")
     print("Account successfully registered!")
     return 0
 
-def register() -> int or dict:
+def register() -> None or dict:
     '''
     Main entry point funtion for the module
     '''
@@ -43,7 +43,7 @@ def register() -> int or dict:
     if find_user(username, student_id) is not None:
         print("Username or student ID is already registered."
               + f" Please contact {config.CONTACT_NAME} to reset your password if you have forgotten it.")
-        return 1
+        return None
     
     password_hash = None
     while password_hash is None:
