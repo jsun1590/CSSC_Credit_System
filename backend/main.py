@@ -1,5 +1,5 @@
 from logic.account import Account
-import src.auth as auth
+import backend.auth as auth
 import os
 import cmd
 import colorama

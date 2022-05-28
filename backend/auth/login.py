@@ -1,9 +1,9 @@
 from getpass import getpass
 from hashlib import pbkdf2_hmac
-import src.utils.logger as logger
+import backend.utils.logger as logger
 import colorama
 import pymongo
-from src.utils.functions import find_user, valid_input
+from backend.utils.functions import find_user, valid_input
 
 
 def compare_hash(salt: str,
