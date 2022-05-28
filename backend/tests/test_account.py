@@ -1,4 +1,3 @@
-from threading import activeCount
 import unittest
 from  logic.account import Account
 

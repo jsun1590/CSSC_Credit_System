@@ -3,10 +3,10 @@ from getpass import getpass
 from hashlib import pbkdf2_hmac
 
 import colorama
-import backend.configs.config as config
+import configs.config as config
 from pymongo import MongoClient
-from backend.utils.functions import find_user, valid_input
-import backend.utils.logger as logger
+from utils.functions import find_user, valid_input
+import utils.logger as logger
 
 
 def salt_and_hash(raw_password: str) -> tuple[str, str]:

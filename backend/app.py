@@ -6,7 +6,7 @@ def create_app():
     app = Flask(__name__, instance_relative_config=True)
     app.config['SECRET_KEY'] = 'mysecretkey'
 
-    import security
+    import src.security as security
     app.register_blueprint(security.bp)
     
     @app.route('/unprotected')

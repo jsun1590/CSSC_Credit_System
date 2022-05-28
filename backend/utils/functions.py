@@ -1,7 +1,7 @@
 from getpass import getpass
 
 from pymongo import MongoClient
-from src.configs import config
+from configs import config
 
 
 def valid_input(
